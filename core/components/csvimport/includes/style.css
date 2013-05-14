@@ -1,0 +1,41 @@
+/* Styles */
+
+#csvImport {
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+
+#csvImport h2 {
+	padding:35px 0 0;
+}
+
+#csvImport form {
+	background-color:#fff;
+	border:1px solid #999;
+	padding:15px 0 0;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#csvImport form p {
+	border-top:1px solid #999;
+	border-bottom:1px solid #999;
+	color:#5A5A5A;
+	padding:15px;
+	margin:0 0 15px;
+	background-color:#f7f7f7;
+}
+
+#csvImport form label {
+	display:inline-block;
+	padding:15px;
+	min-width:100px;
+}
+
+#csvImport form button {
+	display:block;
+	padding:5px;
+	margin:0 15px 15px;
+}
