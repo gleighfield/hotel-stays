@@ -70,7 +70,7 @@
 
 	foreach($offers as $result) {
 		$i = array (
-			name			=> $result->get('name') . ' (' . substr($result->get('distance'), 0,3) . ' miles away)',
+			name			=> $result->get('name') . ' (' . substr($result->get('distance'), 0,4) . ' miles away)',
 			addOne			=> $result->get('addressLineOne'),
 			addTwo			=> $result->get('addressLineTwo'),
 			addThree		=> $result->get('addressLineThree'),
