@@ -86,8 +86,18 @@ if (isset($_POST['submit'])) {
 				$listing['lat']	= $line[23];
 			}
 			else {
-				//OK We need to get this postcodes co-ordinates, we know to use a postcode, because we've said a valid postcode MUST be included.
-				$address = urlencode($listing['postCode']);        
+				//OK We need to get this address's co-ordinates, we know to use a postcode and a valid address line one, because we've said a valid postcode and address line one MUST be included.
+	
+	        		$address = $listing['addressLineOne'];
+	        		if (!empty($listing['addressLineTwo'])) {
+					$address .= ', ' . $listing['addressLineTwo'];
+				}
+	        		if (!empty($listing['addressLineThree'])) {
+					$address .= ', ' . $listing['addressLineThree'];
+				}
+	        		$address .= ', '. $listing['postCode'];
+	        		$address=urlencode($address);
+       
 	        		$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
 
 	       		$gps = file_get_contents($link);
