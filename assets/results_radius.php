@@ -27,30 +27,6 @@
 	$modx->addPackage('counties', MODX_CORE_PATH . 'components/counties/' . 'model/','modx_');
 	$modx->addPackage('countries', MODX_CORE_PATH . 'components/countries/' . 'model/','modx_');
 
-//OLD QUERY
-/*
-	$q = $modx->newQuery($search['className']);
-	$q->select($modx->getSelectColumns($search['className'], $search['className']));
-	$q->innerJoin('County', 'County', $search['className'].'.countyId=County.id');
-	$q->innerJoin('Country', 'Country', $search['className'].'.countryId=Country.id');
-	$q->select($modx->getSelectColumns('County', 'County', 'County.'));
-	$q->select($modx->getSelectColumns('Country', 'Country', 'Country.'));
-
-	//Null check for search criteria
-	if ($search['term'] != null) {
-		$criteria = array(
-			$search['by'].':LIKE' => '%'. $search['term'] .'%'
-		);
-	}
-
-	$q->where($criteria);
-	$q->sortby('name','ASC');
-	$q->limit(20, $search['offset']);
-*/
-
-// NEW QUERY	
-	//If postcode, or town
-
 	//Search distance in miles
 	$dist = $search['radius'];
 
