@@ -27,63 +27,57 @@
 	$modx->addPackage('counties', MODX_CORE_PATH . 'components/counties/' . 'model/','modx_');
 	$modx->addPackage('countries', MODX_CORE_PATH . 'components/countries/' . 'model/','modx_');
 
-	//Null check for search criteria
-	if ($search['term'] != null) {
-		if ($search['by'] == 'postCode') {
-			$criteria = array(
-				$search['by'].':LIKE' => '%'. $search['term'] .'%'
-			);
-		}
-		else {
-			$criteria = array(
-				$search['by'].':LIKE' => '%'. $search['term'] .'%'
-			);
-		}
-	}
-
-	//Build query
+//OLD QUERY
 	$q = $modx->newQuery($search['className']);
 	$q->select($modx->getSelectColumns($search['className'], $search['className']));
 	$q->innerJoin('County', 'County', $search['className'].'.countyId=County.id');
 	$q->innerJoin('Country', 'Country', $search['className'].'.countryId=Country.id');
 	$q->select($modx->getSelectColumns('County', 'County', 'County.'));
 	$q->select($modx->getSelectColumns('Country', 'Country', 'Country.'));
+
+	//Null check for search criteria
+	if ($search['term'] != null) {
+		$criteria = array(
+			$search['by'].':LIKE' => '%'. $search['term'] .'%'
+		);
+	}
+
 	$q->where($criteria);
 	$q->sortby('name','ASC');
 	$q->limit(20, $search['offset']);
 
-/*	
+/* NEW QUERY	
 	//If postcode, or town
-	if ($search['by'] == 'postCode' || $search['by'] == 'county' || $search['by'] == 'town') {
-		//Search distance in miles
-		$dist = $search['radius'];
 
-		$address = urlencode($search['term']);
-		$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
+	//Search distance in miles
+	$dist = $search['radius'];
 
-		$gps = file_get_contents($link);
-        	$gps = $modx->fromJSON($gps);
-        	$gps = $gps['results'][0];
-        	$lat = $gps['geometry']['location']['lat'];
-        	$lng = $gps['geometry']['location']['lng'];
+	$address = urlencode($search['term']);
+	$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
+
+	$gps = file_get_contents($link);
+       $gps = $modx->fromJSON($gps);
+       $gps = $gps['results'][0];
+       $lat = $gps['geometry']['location']['lat'];
+       $lng = $gps['geometry']['location']['lng'];
         
-        	$lng1 = $lng - $dist / (cos(deg2rad($lat)) * 69);
-		$lng2 = $lng + $dist / (cos(deg2rad($lat)) * 69);
-		$lat1 = $lat - ($dist / 69);
-		$lat2 = $lat + ($dist / 69);
+       $lng1 = $lng - $dist / (cos(deg2rad($lat)) * 69);
+	$lng2 = $lng + $dist / (cos(deg2rad($lat)) * 69);
+	$lat1 = $lat - ($dist / 69);
+	$lat2 = $lat + ($dist / 69);
 
-		$tableName = $modx->getTableName('modx_' . $search['packageName']);
+	$tableName = $modx->getTableName('modx_' . $search['packageName']);
 
-		$query = "SELECT name, addOne, addTwo, addThree, county, pc, country, url, telephone, monday, tuesday, wednesday, thursday, friday, saturday, sunday, availability, exclusions, description, photo, published, deleted,
-		    3956 * 2 * ASIN( SQRT(POWER(SIN((abs({$modx->quote($lat)}) - abs(lat)) * pi() / 180 / 2), 2) + 
-		    COS(abs({$modx->quote($lat)}) * pi() / 180) * COS(abs(lat) * pi() / 180) * 
-		    POWER(SIN(({$modx->quote($lng)} - lng) * pi() / 180 / 2), 2))) AS distance 
-		    FROM {$tableName} WHERE (lat BETWEEN {$modx->quote($lat1)} AND {$modx->quote($lat2)} 
-		    AND lng BETWEEN {$modx->quote($lng1)} AND {$modx->quote($lng2)}) AND (published = 1 $catsql) HAVING distance < {$dist} ORDER BY distance ASC";
+	$query = "SELECT name, addOne, addTwo, addThree, county, pc, country, url, telephone, monday, tuesday, wednesday, thursday, friday, saturday, sunday, availability, exclusions, description, photo, published, deleted,
+		   3956 * 2 * ASIN( SQRT(POWER(SIN((abs({$modx->quote($lat)}) - abs(lat)) * pi() / 180 / 2), 2) + 
+		   COS(abs({$modx->quote($lat)}) * pi() / 180) * COS(abs(lat) * pi() / 180) * 
+		   POWER(SIN(({$modx->quote($lng)} - lng) * pi() / 180 / 2), 2))) AS distance 
+		   FROM {$tableName} WHERE (lat BETWEEN {$modx->quote($lat1)} AND {$modx->quote($lat2)} 
+		   AND lng BETWEEN {$modx->quote($lng1)} AND {$modx->quote($lng2)}) AND (published = 1) HAVING distance < {$dist} ORDER BY distance ASC";
 
-		$c = new xPDOCriteria($modx, $query);
-		$q = $modx->getIterator($search['className'], $c);
-	}
+	$c = new xPDOCriteria($modx, $query);
+	$q = $modx->getIterator($search['className'], $c);
+
 */
 
 	$offers = $modx->getCollection($search['className'], $q);
