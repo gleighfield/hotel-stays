@@ -216,9 +216,9 @@ switch ($task) {
         }
 
 	//Custom overload for adding in lng and lat of postcode
-	if (empty($scriptProperties['postCode'])) {
+	if (empty($scriptProperties['addressLineOne'] || empty($scriptProperties['postCode'])) {
 		$updateerror = true;
-		$errormsg = 'Please add the postcode';
+		$errormsg = 'Information missing please correct.';
 		return;
 	}
 
