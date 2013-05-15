@@ -10,6 +10,7 @@
 		packageName	=> lcfirst($_GET['offer']),
 		by		=> $_GET['by'],
 		term 		=> $_GET['term'],
+		radius		=> $_GET['radius']
 		offset		=> $_GET['offset'],
 	);
 
@@ -50,6 +51,40 @@
 	$q->where($criteria);
 	$q->sortby('name','ASC');
 	$q->limit(20, $search['offset']);
+
+/*	
+	//If postcode, or town
+	if ($search['by'] == 'postCode' || $search['by'] == 'county' || $search['by'] == 'town') {
+		//Search distance in miles
+		$dist = $search['radius'];
+
+		$address = urlencode($search['term']);
+		$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
+
+		$gps = file_get_contents($link);
+        	$gps = $modx->fromJSON($gps);
+        	$gps = $gps['results'][0];
+        	$lat = $gps['geometry']['location']['lat'];
+        	$lng = $gps['geometry']['location']['lng'];
+        
+        	$lng1 = $lng - $dist / (cos(deg2rad($lat)) * 69);
+		$lng2 = $lng + $dist / (cos(deg2rad($lat)) * 69);
+		$lat1 = $lat - ($dist / 69);
+		$lat2 = $lat + ($dist / 69);
+
+		$tableName = $modx->getTableName('modx_' . $search['packageName']);
+
+		$query = "SELECT name, addOne, addTwo, addThree, county, pc, country, url, telephone, monday, tuesday, wednesday, thursday, friday, saturday, sunday, availability, exclusions, description, photo, published, deleted,
+		    3956 * 2 * ASIN( SQRT(POWER(SIN((abs({$modx->quote($lat)}) - abs(lat)) * pi() / 180 / 2), 2) + 
+		    COS(abs({$modx->quote($lat)}) * pi() / 180) * COS(abs(lat) * pi() / 180) * 
+		    POWER(SIN(({$modx->quote($lng)} - lng) * pi() / 180 / 2), 2))) AS distance 
+		    FROM {$tableName} WHERE (lat BETWEEN {$modx->quote($lat1)} AND {$modx->quote($lat2)} 
+		    AND lng BETWEEN {$modx->quote($lng1)} AND {$modx->quote($lng2)}) AND (published = 1 $catsql) HAVING distance < {$dist} ORDER BY distance ASC";
+
+		$c = new xPDOCriteria($modx, $query);
+		$q = $modx->getIterator($search['className'], $c);
+	}
+*/
 
 	$offers = $modx->getCollection($search['className'], $q);
 
