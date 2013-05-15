@@ -10,7 +10,7 @@
 		packageName	=> lcfirst($_GET['offer']),
 		by		=> $_GET['by'],
 		term 		=> $_GET['term'],
-		radius		=> $_GET['radius']
+		radius		=> $_GET['radius'],
 		offset		=> $_GET['offset'],
 	);
 
@@ -28,6 +28,7 @@
 	$modx->addPackage('countries', MODX_CORE_PATH . 'components/countries/' . 'model/','modx_');
 
 //OLD QUERY
+/*
 	$q = $modx->newQuery($search['className']);
 	$q->select($modx->getSelectColumns($search['className'], $search['className']));
 	$q->innerJoin('County', 'County', $search['className'].'.countyId=County.id');
@@ -45,8 +46,9 @@
 	$q->where($criteria);
 	$q->sortby('name','ASC');
 	$q->limit(20, $search['offset']);
+*/
 
-/* NEW QUERY	
+// NEW QUERY	
 	//If postcode, or town
 
 	//Search distance in miles
@@ -60,39 +62,45 @@
        $gps = $gps['results'][0];
        $lat = $gps['geometry']['location']['lat'];
        $lng = $gps['geometry']['location']['lng'];
-        
-       $lng1 = $lng - $dist / (cos(deg2rad($lat)) * 69);
-	$lng2 = $lng + $dist / (cos(deg2rad($lat)) * 69);
-	$lat1 = $lat - ($dist / 69);
-	$lat2 = $lat + ($dist / 69);
 
-	$tableName = $modx->getTableName('modx_' . $search['packageName']);
+	$tableName = $modx->getTableName($search['className']);
+	$countyName = $modx->getTableName('County');
+	$countryName = $modx->getTableName('Country');
+	$offerName = $modx->getTableName('Offer');
 
-	$query = "SELECT name, addOne, addTwo, addThree, county, pc, country, url, telephone, monday, tuesday, wednesday, thursday, friday, saturday, sunday, availability, exclusions, description, photo, published, deleted,
-		   3956 * 2 * ASIN( SQRT(POWER(SIN((abs({$modx->quote($lat)}) - abs(lat)) * pi() / 180 / 2), 2) + 
-		   COS(abs({$modx->quote($lat)}) * pi() / 180) * COS(abs(lat) * pi() / 180) * 
-		   POWER(SIN(({$modx->quote($lng)} - lng) * pi() / 180 / 2), 2))) AS distance 
-		   FROM {$tableName} WHERE (lat BETWEEN {$modx->quote($lat1)} AND {$modx->quote($lat2)} 
-		   AND lng BETWEEN {$modx->quote($lng1)} AND {$modx->quote($lng2)}) AND (published = 1) HAVING distance < {$dist} ORDER BY distance ASC";
+	$query = "SELECT 	
+		$tableName.name, 
+		$tableName.addressLineOne, $tableName.addressLineTwo, $tableName.addressLineThree, $tableName.countyId, $tableName.postCode, $tableName.countryId, 
+		$tableName.url, 
+		$tableName.telephoneNumber, 
+		$tableName.monday, $tableName.tuesday, $tableName.wednesday, $tableName.thursday, $tableName.friday, $tableName.saturday, $tableName.sunday, 
+		$tableName.availability, $tableName.exclusions, $tableName.description, 
+		$tableName.photo, $tableName.published, $tableName.deleted, 
+		$tableName.lng, $tableName.lat,
+		$countyName.name AS CountyName,
+		$countryName.name AS CountryName,
+		(3959 * acos(cos(radians($lat)) * cos(radians($tableName.lat)) * cos(radians($tableName.lng) - radians($lng) ) + sin(radians($lat)) * sin(radians($tableName.lat)))) AS distance 
+		FROM $tableName
+		INNER JOIN $countyName ON countyId = $countyName.id
+     		INNER JOIN $countryName ON countryId = $countryName.id
+		HAVING distance < {$dist} 
+		ORDER BY distance LIMIT {$search['offset']},20";
 
 	$c = new xPDOCriteria($modx, $query);
-	$q = $modx->getIterator($search['className'], $c);
 
-*/
-
-	$offers = $modx->getCollection($search['className'], $q);
+	$offers = $modx->getIterator($search['className'], $c);
 
 	$results = array();
 
 	foreach($offers as $result) {
 		$i = array (
-			name			=> $result->get('name'),
+			name			=> $result->get('name') . ' (' . substr($result->get('distance'), 0,3) . ' miles away)',
 			addOne			=> $result->get('addressLineOne'),
 			addTwo			=> $result->get('addressLineTwo'),
 			addThree		=> $result->get('addressLineThree'),
-			county			=> $result->get('County.name'),
+			county			=> $result->get('CountyName'),
 			pc			=> $result->get('postCode'),
-			country		=> $result->get('Country.name'),
+			country		=> $result->get('CountryName'),
 			url			=> $result->get('url'),
 			telephone		=> $result->get('telephoneNumber'),
 			monday			=> $modx->getObject('Offer', $result->get('monday'))->get('name'),
