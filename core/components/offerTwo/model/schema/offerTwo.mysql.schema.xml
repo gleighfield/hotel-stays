@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="offerTwo" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+	<object class="OfferTwo" table="offerTwo" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="addressLineOne" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="addressLineTwo" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="addressLineThree" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="countyId" dbtype="tinyint" precision="4" attributes="unsigned" phptype="integer" null="false" />
+		<field key="postCode" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="countryId" dbtype="tinyint" precision="4" attributes="unsigned" phptype="integer" null="false" />
+		<field key="url" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="telephoneNumber" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="monday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="tuesday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="wednesday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="thursday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="friday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="saturday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="sunday" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+		<field key="availability" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="exclusions" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="500" phptype="string" null="true" />
+		<field key="photo" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="published" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="deleted" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="lng" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="lat" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+	</object>
+	<object class="Offers" table="offers" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="comment" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="deleted" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="Countries" table="countries" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="deleted" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+	</object>
+	<object class="Counties" table="counties" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="deleted" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+	</object>
+</model>
