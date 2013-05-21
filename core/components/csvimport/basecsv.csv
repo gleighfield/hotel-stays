@@ -1,1 +1,1 @@
-id,name,addressLineOne,addressLineTwo,addressLineThree,countyId,postCode,countryId,url,telephoneNumber,monday,tuesday,wednesday,thursday,friday,saturday,sunday,availability,exclusions,description,photo,published,deleted
+id,name,addressLineOne,addressLineTwo,addressLineThree,countyId,postCode,countryId,url,telephoneNumber,monday,tuesday,wednesday,thursday,friday,saturday,sunday,availability,exclusions,description,photo,published,deleted,lng,lat
