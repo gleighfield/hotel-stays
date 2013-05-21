@@ -5,7 +5,7 @@ require_once('includes/header.php');
 //Offers
 $offers = array(
 	OfferOne => "The Sun's Hotels from £10 - 4th May - 30th June 2013",
-	//OfferTwo => "The Sun's Meal Deals - Dine from £9.50"
+	OfferTwo => "The Sun's Meal Deals from £9.50 - 1st June - ",
 );
 
 $html .='
@@ -14,6 +14,7 @@ $html .='
 
 		<form action="" method="POST" enctype="multipart/form-data">
 			<p>It is very important that you keep the structure of the csv file the same. A base CSV file is <a href="'. $csvImportPath .'includes/basecsv.csv">here</a></p>
+			<p>If you are inserting more than one offer on a single day, this is done with <strong>double pipes</strong> i.e <strong>"offerIdOne||offerIdTwo"</strong></p>
 			<label for="offer">Select offer</label>
 			<select name="offer" id="offer">
 				<option value="empty">Please select an offer...</option>';
