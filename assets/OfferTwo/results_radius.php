@@ -9,13 +9,13 @@
 		className	=> $_GET['offer'],
 		packageName	=> lcfirst($_GET['offer']),
 		by		=> $_GET['by'],
-		term 		=> $_GET['term'],
+		term 		=> strtoupper($_GET['term']),
 		radius		=> $_GET['radius'],
 		offset		=> $_GET['offset'],
 	);
 
 	//Init MODX
-	require_once '../core/config/config.inc.php';
+	require_once '../../core/config/config.inc.php';
 	require_once MODX_CORE_PATH.'model/modx/modx.class.php';
 	$modx = new modX();
 	$modx->initialize('web');
@@ -26,18 +26,17 @@
 	$modx->addPackage('offers', MODX_CORE_PATH . 'components/offers/' . 'model/','modx_');
 	$modx->addPackage('counties', MODX_CORE_PATH . 'components/counties/' . 'model/','modx_');
 	$modx->addPackage('countries', MODX_CORE_PATH . 'components/countries/' . 'model/','modx_');
+	$modx->addPackage('postcodes', MODX_CORE_PATH . 'components/postcodes/' . 'model/','modx_');
 
 	//Search distance in miles
 	$dist = $search['radius'];
 
-	$address = urlencode($search['term']);
-	$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
+	$postcode = $modx->getObject('Postcode', array(
+		'name' => $search['term']
+	));
 
-	$gps = file_get_contents($link);
-       $gps = $modx->fromJSON($gps);
-       $gps = $gps['results'][0];
-       $lat = $gps['geometry']['location']['lat'];
-       $lng = $gps['geometry']['location']['lng'];
+       $lat = $postcode->get('lat');
+       $lng = $postcode->get('lng');
 
 	$tableName = $modx->getTableName($search['className']);
 	$countyName = $modx->getTableName('County');
@@ -63,14 +62,29 @@
 		ORDER BY distance LIMIT {$search['offset']},20";
 
 	$c = new xPDOCriteria($modx, $query);
+	
+	//echo $c->toSql();
+	//return false;
 
-	$offers = $modx->getIterator($search['className'], $c);
+	$listings = $modx->getIterator($search['className'], $c);
+
+	$offers = array(
+		'6' 	=> '(Lunch) 2 courses, for 2 people for &#163;9.50',
+		'7' 	=> '(Dinner) 2 courses, for 2 people for &#163;9.50',
+		'8' 	=> '(Lunch) 2 courses for 2 adults for &#163;15.00',
+		'9' 	=> '(Dinner) 2 courses for 2 adults &#163;15.00',
+		'15' 	=> '(Lunch) 2 courses, for 2 adults/2 children &#163;15.00',
+		'16' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;15.00',
+		'17' 	=> '(Lunch) 2 courses, for 2 adults/2 children &#163;20.00',
+		'18' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;20.00',
+		'19' 	=> 'A starter and 3 Tapas plates each for &#163;9.50',	
+	);
 
 	$results = array();
 
-	foreach($offers as $result) {
+	foreach($listings as $result) {
 		$i = array (
-			name			=> $result->get('name') . ' (' . substr($result->get('distance'), 0,4) . ' miles away)',
+			name			=> $result->get('name') . ' <span class="distanceAway">(' . substr($result->get('distance'), 0,4) . ' miles away)</span>',
 			addOne			=> $result->get('addressLineOne'),
 			addTwo			=> $result->get('addressLineTwo'),
 			addThree		=> $result->get('addressLineThree'),
@@ -79,13 +93,13 @@
 			country		=> $result->get('CountryName'),
 			url			=> $result->get('url'),
 			telephone		=> $result->get('telephoneNumber'),
-			monday			=> $modx->getObject('Offer', $result->get('monday'))->get('name'),
-			tuesday		=> $modx->getObject('Offer', $result->get('tuesday'))->get('name'),
-			wednesday		=> $modx->getObject('Offer', $result->get('wednesday'))->get('name'),
-			thursday		=> $modx->getObject('Offer', $result->get('thursday'))->get('name'),
-			friday			=> $modx->getObject('Offer', $result->get('friday'))->get('name'),
-			saturday		=> $modx->getObject('Offer', $result->get('saturday'))->get('name'),
-			sunday			=> $modx->getObject('Offer', $result->get('sunday'))->get('name'), 
+			monday			=> explode('||', $result->get('monday')),
+			tuesday		=> explode('||', $result->get('tuesday')),
+			wednesday		=> explode('||', $result->get('wednesday')),
+			thursday		=> explode('||', $result->get('thursday')),
+			friday			=> explode('||', $result->get('friday')),
+			saturday		=> explode('||', $result->get('saturday')),
+			sunday			=> explode('||', $result->get('sunday')),
 			availability		=> htmlentities($result->get('availability')),
 			exclusions		=> htmlentities($result->get('exclusions')),
 			description		=> htmlentities($result->get('description')),
@@ -94,6 +108,75 @@
 			deleted		=> $result->get('deleted')
 		);
 
+		$dayOffers = array();
+		
+		foreach($offers as $offer => $offerKey) {
+			$included = 0;
+			
+			$html = "<tr>";
+			$html .="<td>" . $offerKey . "</td>";
+			
+			if (in_array($offer, $i['monday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			
+			if (in_array($offer, $i['tuesday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			
+			if (in_array($offer, $i['wednesday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			
+			if (in_array($offer, $i['thursday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			if (in_array($offer, $i['friday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			if (in_array($offer, $i['saturday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			if (in_array($offer, $i['sunday'])) {
+				$html .= "<td><span class='tick'></span></td>";
+				$included = 1;
+			}
+			else {
+				$html .= "<td></td>";	
+			}
+			
+			$html .= "</tr>";
+			
+			if ($included === 1) {
+				array_push($dayOffers, $html);
+			}
+		}
+
+		$i['rows'] = $dayOffers;
 		array_push($results, $i);
 	}
 

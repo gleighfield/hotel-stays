@@ -14,7 +14,7 @@
 	);
 
 	//Init MODX
-	require_once '../core/config/config.inc.php';
+	require_once '../../core/config/config.inc.php';
 	require_once MODX_CORE_PATH.'model/modx/modx.class.php';
 	$modx = new modX();
 	$modx->initialize('web');

@@ -5,7 +5,7 @@ require_once('includes/header.php');
 //Offers
 $offers = array(
 	OfferOne => "The Sun's Hotels from £10 - 4th May - 30th June 2013",
-	OfferTwo => "The Sun's Meal Deals from £9.50 - 1st June - ",
+	OfferTwo => "The Sun's Meal Deals from £9.50 - 1st June - 31st July 2013",
 );
 
 $html .='
@@ -13,7 +13,7 @@ $html .='
 		<h2>CSV Import</h2>
 
 		<form action="" method="POST" enctype="multipart/form-data">
-			<p>It is very important that you keep the structure of the csv file the same. A base CSV file is <a href="'. $csvImportPath .'includes/basecsv.csv">here</a></p>
+			<p>It is very important that you keep the structure of the csv file the same. A base CSV file is <a href="'. $csvImportPath .'includes/basecsv.csv">here</a>. If you are importing listings that do not currently have lng and lat information, limit each import to 350 listings, otherwise timeouts might occur.</p>
 			<p>If you are inserting more than one offer on a single day, this is done with <strong>double pipes</strong> i.e <strong>"offerIdOne||offerIdTwo"</strong></p>
 			<label for="offer">Select offer</label>
 			<select name="offer" id="offer">
@@ -25,7 +25,9 @@ $html .='
 			</select>
 			<br>
 			<label for="file">Select .csv file</label>
-			<input type="file" name="file" id="file"/>
+			<input type="file" name="file" id="file"/><br>
+			<label for="newImport">New import?</label>
+			<input type="checkbox" name="newimport" id="newImport" value="1">
 			<input type="hidden" name="submit" />
 			<button id="import" type="submit">Import</button>
 		</form>
@@ -38,6 +40,7 @@ if (isset($_POST['submit'])) {
 		className 	=> $_POST['offer'],
 		packageName	=> lcfirst($_POST['offer']),
 		count		=> 0,
+		status		=> $_POST['newimport'],
 		fileName 	=> $_FILES['file']['name'],
 		fileType 	=> $_FILES['file']['type'],
 		fileSize 	=> $_FILES['file']['size'],
@@ -78,11 +81,11 @@ if (isset($_POST['submit'])) {
 				photo			=> $line[20],
 				published		=> $line[21],
 				deleted		=> 0,			//Forcefully setting as zero regardless of user input.
-				lng			=> 0,
-				lat			=> 0,
+				lng			=> $line[23],
+				lat			=> $line[24],
 			);
 
-			if (!empty($line[22]) && !empty($line23)) {
+			if (!empty($line[23]) && !empty($line24)) {
 				$listing['lng']	= $line[22];
 				$listing['lat']	= $line[23];
 			}
@@ -109,14 +112,19 @@ if (isset($_POST['submit'])) {
 	        		$listing['lat'] = $gps['geometry']['location']['lat'];
 			}
 
+
+//Hide the above until api for lng and lat resolved
+
 			array_push($listings, $listing);
 		}
 
 		$import[count] ++;
 	}
 
-	//Truncate the table
-	$modx->exec("TRUNCATE TABLE modx_". $import[packageName]);
+	if ($import['status'] == "1") {
+		//Truncate the table
+		$modx->exec("TRUNCATE TABLE modx_". $import[packageName]);
+	}
 
 	foreach ($listings as $listing) {
 		$i = $modx->newObject($import[className], $listing);
