@@ -62,7 +62,7 @@
 		'16' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;15.00',
 		'17' 	=> '(Lunch) 2 courses, for 2 adults/2 children &#163;20.00',
 		'18' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;20.00',
-		'19' 	=> 'A starter and 3 Tapas plates each for &#163;9.50',	
+		'19' 	=> 'A starter and 3 Tapas Dishes for &#163;9.50 each',	
 	);
 
 	$results = array();
@@ -71,12 +71,12 @@
 		$i = array (
 			name		=> $result->get('name'),
 			addOne		=> $result->get('addressLineOne'),
-			addTwo		=> $result->get('addressLineTwo'),
-			addThree	=> $result->get('addressLineThree'),
-			county		=> $result->get('County.name'),
-			pc		=> $result->get('postCode'),
-			country		=> $result->get('Country.name'),
-			url		=> $result->get('url'),
+			addTwo		=> ucfirst(strtolower($result->get('addressLineTwo'))),
+			addThree	=> ucfirst(strtolower($result->get('addressLineThree'))),
+			county		=> ucfirst(strtolower($result->get('County.name'))),
+			pc		    => $result->get('postCode'),
+			country		=> ucfirst(strtolower($result->get('Country.name'))),
+			url		    => $result->get('url'),
 			telephone	=> $result->get('telephoneNumber'),
 			monday		=> explode('||', $result->get('monday')),
 			tuesday		=> explode('||', $result->get('tuesday')),

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="postcodes" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+	<object class="Postcode" table="postcodes" extends="xPDOSimpleObject" >
+        <field key="name" dbtype="varchar" precision="10" phptype="string" null="false" default=""/>
+        <field key="lat" dbtype="varchar" precision="15" phptype="string" null="false" default=""/>
+        <field key="lng" dbtype="varchar" precision="15" phptype="string" null="false" default=""/> 
+	</object>
+</model>

@@ -223,24 +223,24 @@ switch ($task) {
 	}
 
 	//We've passed, lets now find out this address's lng and lat.
-	$address = $scriptProperties['addressLineOne'];
-	if (!empty($$scriptProperties['addressLineTwo'])) {
-		$address .= ', ' . $scriptProperties['addressLineTwo'];
-	}
-	if (!empty($scriptProperties['addressLineThree'])) {
-		$address .= ', ' . $scriptProperties['addressLineThree'];
-	}
-	$address .= ', '. $scriptProperties['postCode'];
-	$address=urlencode($address);
+    $address = $scriptProperties['addressLineOne'];
+    if (!empty($$scriptProperties['addressLineTwo'])) {
+        $address .= ', ' . $scriptProperties['addressLineTwo'];
+    }
+    if (!empty($scriptProperties['addressLineThree'])) {
+        $address .= ', ' . $scriptProperties['addressLineThree'];
+    }
+    $address .= ', '. $scriptProperties['postCode'];
+    $address=urlencode($address);
 
-	$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
-		
-	$gps = file_get_contents($link);
-	$gps = $modx->fromJSON($gps);
-	$gps = $gps['results'][0];
+    $link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
 
-	$postvalues['lng'] = $gps['geometry']['location']['lng'];
-	$postvalues['lat'] = $gps['geometry']['location']['lat'];
+    $gps = file_get_contents($link);
+    $gps = $modx->fromJSON($gps);
+    $gps = $gps['results'][0];
+
+    $postvalues['lng'] = $gps['geometry']['location']['lng'];
+    $postvalues['lat'] = $gps['geometry']['location']['lat'];
 
 	$object->fromArray($postvalues);
 }

@@ -26,20 +26,17 @@
 	$modx->addPackage('offers', MODX_CORE_PATH . 'components/offers/' . 'model/','modx_');
 	$modx->addPackage('counties', MODX_CORE_PATH . 'components/counties/' . 'model/','modx_');
 	$modx->addPackage('countries', MODX_CORE_PATH . 'components/countries/' . 'model/','modx_');
+	$modx->addPackage('postcodes', MODX_CORE_PATH . 'components/postcodes/' . 'model/','modx_');
 
 	//Search distance in miles
 	$dist = $search['radius'];
 
-	$address = urlencode($search['term']);
-	$link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
-	
-	$gps = file_get_contents($link);
+	$postcode = $modx->getObject('Postcode', array(
+		'name' => $search['term']
+	));
 
-        $gps = $modx->fromJSON($gps);
-
-       $gps = $gps['results'][0];
-       $lat = $gps['geometry']['location']['lat'];
-       $lng = $gps['geometry']['location']['lng'];
+       $lat = $postcode->get('lat');
+       $lng = $postcode->get('lng');
 
 	$tableName = $modx->getTableName($search['className']);
 	$countyName = $modx->getTableName('County');
