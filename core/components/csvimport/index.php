@@ -4,8 +4,10 @@ require_once('includes/header.php');
 
 //Offers
 $offers = array(
-    OfferOne => "The Sun's Hotels from £10 - 4th May - 30th June 2013",
-    OfferTwo => "The Sun's Meal Deals from £9.50 - 1st June - 31st July 2013",
+    OfferOne    => "The Sun's Hotels from £10 - 4th May - 30th June 2013",
+    OfferTwo    => "The Sun's Meal Deals from £9.50 - 1st June - 31st July 2013",
+    OfferThree  => "The Sun's Camping from £1 - 22nd June - xxxx xxxx 2013",
+    OfferFour   => "The Sun's 2 for 1 or Free Sports Sessions/Lessons - 22nd June - xxxx xxxx 2013",
 );
 
 $html .='
@@ -19,7 +21,7 @@ $html .='
 			<select name="offer" id="offer">
 				<option value="empty">Please select an offer...</option>';
 foreach ($offers as $k => $v) {
-    $html .= '		<option value="'. $k .'">'.  htmlentities($v) .'</option>';
+    $html .= '		<option value="'. $k .'">'.  $v .'</option>';
 }
 $html .='
 			</select>
