@@ -68,17 +68,11 @@
 
 	$listings = $modx->getIterator($search['className'], $c);
 
-	$offers = array(
-		'6' 	=> '(Lunch) 2 courses, for 2 people for &#163;9.50',
-		'7' 	=> '(Dinner) 2 courses, for 2 people for &#163;9.50',
-		'8' 	=> '(Lunch) 2 courses for 2 adults for &#163;15.00',
-		'9' 	=> '(Dinner) 2 courses for 2 adults &#163;15.00',
-		'15' 	=> '(Lunch) 2 courses, for 2 adults/2 children &#163;15.00',
-		'16' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;15.00',
-		'17' 	=> '(Lunch) 2 courses, for 2 adults/2 children &#163;20.00',
-		'18' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;20.00',
-		'19' 	=> 'A starter and 3 Tapas Dishes for &#163;9.50 each',	
-	);
+    $offers = array(
+        '20'    => '1 night’s pitch for £1',
+        '21'    => '2 nights for the price of 1',
+        '22'    => '7 nights for the price of 5',
+    );
 
 	$results = array();
 
