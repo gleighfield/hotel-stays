@@ -62,7 +62,9 @@
 		'16' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;15.00',
 		'17' 	=> '(Lunch) 2 courses, for 2 adults/2 children &#163;20.00',
 		'18' 	=> '(Dinner) 2 courses, for 2 adults/2 children &#163;20.00',
-		'19' 	=> 'A starter and 3 Tapas Dishes for &#163;9.50 each',	
+		'19' 	=> 'A starter and 3 Tapas Dishes for &#163;9.50 each',
+        '23'    => 'Free Taster Session',
+        '24'    => '2 for 1 sessions/lessons/entry/time',
 	);
 
 	$results = array();
