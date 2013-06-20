@@ -8,7 +8,7 @@
 	$search = array(
 		className	=> $_GET['offer'],
 		packageName	=> lcfirst($_GET['offer']),
-		by		=> $_GET['by'],
+		by		    => $_GET['by'],
 		term 		=> $_GET['term'],
 		offset		=> $_GET['offset'],
 	);
@@ -30,13 +30,21 @@
 	if ($search['term'] != null) {
 		if ($search['by'] == 'postCode') {
 			$criteria = array(
-				$search['by'].':LIKE' => $search['term']
+				$search['by'].':LIKE' => '%' . $search['term'] . '%'
 			);
 		}
 		else {
-			$criteria = array(
-				$search['by'].':LIKE' => $search['term']
-			);
+
+            if (is_numeric($search['term'])) {
+                $criteria = array(
+                    $search['by'].':LIKE' => $search['term']
+                );
+            }
+            else {
+                $criteria = array(
+                    $search['by'].':LIKE' => '%' . $search['term'] . '%'
+                );
+            }
 		}
 	}
 
@@ -64,9 +72,9 @@
 		$i = array (
 			name		=> $result->get('name'),
 			addOne		=> $result->get('addressLineOne'),
-			addTwo		=> ucfirst(strtolower($result->get('addressLineTwo'))),
-			addThree	=> ucfirst(strtolower($result->get('addressLineThree'))),
-			county		=> ucfirst(strtolower($result->get('County.name'))),
+			addTwo		=> $result->get('addressLineTwo'),
+			addThree	=> $result->get('addressLineThree'),
+			county		=> $result->get('County.name'),
 			pc		    => $result->get('postCode'),
 			country		=> ucfirst(strtolower($result->get('Country.name'))),
 			url		    => $result->get('url'),
@@ -78,7 +86,7 @@
 			friday		=> explode('||', $result->get('friday')),
 			saturday	=> explode('||', $result->get('saturday')),
 			sunday		=> explode('||', $result->get('sunday')),
-			availability	=> htmlentities($result->get('availability')),
+			availability=> htmlentities($result->get('availability')),
 			exclusions	=> htmlentities($result->get('exclusions')),
 			description	=> htmlentities($result->get('description')),
 			photo		=> $result->get('photo'),
