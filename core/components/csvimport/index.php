@@ -30,6 +30,10 @@ $html .='
 			<input type="file" name="file" id="file"/><br>
 			<label for="geo">Obtain Co-ords (Slower)?</label>
 			<input type="checkbox" name="geo" id="geo" value="1"><br>
+
+			<label for="geo">Obtain co-ords by postcode instead of full address? Use this if the initial import did not get co-ords?</label>
+			<input type="checkbox" name="geopc" id="geopc" value="1"><br>
+
 			<label for="newImport">New import?</label>
 			<input type="checkbox" name="newimport" id="newImport" value="1">
 			<input type="hidden" name="submit" />
@@ -46,6 +50,7 @@ if (isset($_POST['submit'])) {
         count		=> 0,
         status		=> $_POST['newimport'],
         geo         => $_POST['geo'],
+        geopc       => $_POST['geopc'],
         fileName 	=> $_FILES['file']['name'],
         fileType 	=> $_FILES['file']['type'],
         fileSize 	=> $_FILES['file']['size'],
@@ -106,6 +111,12 @@ if (isset($_POST['submit'])) {
                         $address .= ', ' . $listing['addressLineThree'];
                     }
                     $address .= ', '. $listing['postCode'];
+
+                    //Lets obtain geo just on postocode. Less accurate, but should return a result.
+                    if ($import['geopc'] == "1") {
+                        $address = $listing['postCode'];
+                    }
+
                     $address=urlencode($address);
 
                     $link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
