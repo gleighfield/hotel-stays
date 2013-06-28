@@ -69,8 +69,8 @@
 	$listings = $modx->getIterator($search['className'], $c);
 
 	$offers = array(
-        '23'    => 'Free Taster Session',
-        '24'    => '2 for 1',
+        '23'    => 'Free-Taster-Session',
+        '24'    => '2-for-1',
 	);
 
 	$results = array();
