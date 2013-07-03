@@ -5,7 +5,7 @@
     <ignored path="hotel-stays.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="3af07718-e8a9-4b14-981b-860713e7e7ef" time="1369924564218" ignored="false" />
-    <file path="/index.php" changelist="3af07718-e8a9-4b14-981b-860713e7e7ef" time="1372082734149" ignored="false" />
+    <file path="/index.php" changelist="3af07718-e8a9-4b14-981b-860713e7e7ef" time="1372696775000" ignored="false" />
     <file path="/import.php" changelist="3af07718-e8a9-4b14-981b-860713e7e7ef" time="1369988284486" ignored="false" />
     <file path="/scripts.js" changelist="3af07718-e8a9-4b14-981b-860713e7e7ef" time="1369988378864" ignored="false" />
     <file path="/update.php" changelist="3af07718-e8a9-4b14-981b-860713e7e7ef" time="1369989561347" ignored="false" />
@@ -30,27 +30,27 @@
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="results.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/OfferFour/results.php">
+        <entry file="file://$PROJECT_DIR$/assets/OfferThree/results.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="0" selection-start="2113" selection-end="2184" vertical-scroll-proportion="0.0">
+            <state line="55" column="0" selection-start="1835" selection-end="2584" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="results_radius.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/OfferFour/results_radius.php">
+      <file leaf-file-name="results_radius.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/OfferThree/results_radius.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="59" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.0">
+            <state line="110" column="0" selection-start="3404" selection-end="4941" vertical-scroll-proportion="0.6229314">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/components/csvimport/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="73" selection-start="1680" selection-end="1680" vertical-scroll-proportion="0.020408163">
+            <state line="119" column="49" selection-start="5041" selection-end="5041" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,11 +80,11 @@
         <option value="$PROJECT_DIR$/core/components/offerOne/processors/mgr/default/update.php" />
         <option value="$PROJECT_DIR$/assets/OfferTwo/results.php" />
         <option value="$PROJECT_DIR$/assets/OfferTwo/results_radius.php" />
-        <option value="$PROJECT_DIR$/assets/OfferThree/results_radius.php" />
-        <option value="$PROJECT_DIR$/assets/OfferThree/results.php" />
         <option value="$PROJECT_DIR$/assets/OfferFour/results.php" />
         <option value="$PROJECT_DIR$/assets/OfferFour/results_radius.php" />
         <option value="$PROJECT_DIR$/core/components/csvimport/index.php" />
+        <option value="$PROJECT_DIR$/assets/OfferThree/results.php" />
+        <option value="$PROJECT_DIR$/assets/OfferThree/results_radius.php" />
       </list>
     </option>
   </component>
@@ -121,7 +121,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -176,12 +175,71 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="offerThree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hotel-stays" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hotel-stays" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="csvimport" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hotel-stays" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hotel-stays" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hotel-stays" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hotel-stays" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OfferThree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -190,8 +248,8 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../education-learning-mats" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PublishConfig" serverName="THE PARTNERS CLUB @ WHYNOT" serverId="74857216-4aae-4f11-97f5-63cd7e851527" autoUpload="true">
     <servers>
@@ -279,7 +337,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18356457" sideWeight="0.8017817" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19423692" sideWeight="0.8017817" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -396,16 +454,6 @@
         <state line="27" column="36" selection-start="951" selection-end="951" vertical-scroll-proportion="0.07748538" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/OfferThree/return.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="29" selection-start="1672" selection-end="1672" vertical-scroll-proportion="0.627193" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/OfferThree/results_radius.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="4" selection-start="2660" selection-end="2828" vertical-scroll-proportion="-0.65384614" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/uploads/OfferThree/campingHeader.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -416,28 +464,38 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/OfferThree/results.php">
+    <entry file="file://$PROJECT_DIR$/assets/OfferThree/return.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="8" selection-start="3237" selection-end="3237" vertical-scroll-proportion="0.03046595" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/OfferFour/results.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="0" selection-start="2113" selection-end="2184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="42" column="29" selection-start="1672" selection-end="1672" vertical-scroll-proportion="0.33687943" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/OfferFour/results_radius.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="59" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="58" column="59" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.020094562" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/OfferFour/results.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="0" selection-start="2113" selection-end="2184" vertical-scroll-proportion="0.020094562" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/components/csvimport/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="73" selection-start="1680" selection-end="1680" vertical-scroll-proportion="0.020408163">
+        <state line="119" column="49" selection-start="5041" selection-end="5041" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/OfferThree/results.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="0" selection-start="1835" selection-end="2584" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/OfferThree/results_radius.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="0" selection-start="3404" selection-end="4941" vertical-scroll-proportion="0.6229314">
           <folding />
         </state>
       </provider>

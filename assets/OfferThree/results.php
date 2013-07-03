@@ -57,6 +57,13 @@
         '20'    => '1 night’s pitch for £1',
         '21'    => '2 nights for the price of 1',
         '22'    => '7 nights for the price of 5',
+        '25'    => '£6 hard-standing electric pitch, per night (saving of up to 30%)',
+        '26'    => '£6 hard-standing electric pitch, per night (saving of up to 42%)',
+        '27'    => '£6 hard-standing electric pitch, per night (saving of up to 37%)',
+        '28'    => '£7 hard-standing electric pitch, per night (saving of up to 50%)',
+        '29'    => '£8 hard standing electric pitch per night (saving up to 50%)',
+        '30'    => '£5 hard standing electric pitch per night (saving up to 29%)',
+        '31'    => '£5 electric pitch per night (saving up to 27%)',
 	);
 
 	$results = array();
@@ -79,9 +86,9 @@
 			friday		=> explode('||', $result->get('friday')),
 			saturday	=> explode('||', $result->get('saturday')),
 			sunday		=> explode('||', $result->get('sunday')),
-			availability	=> htmlentities($result->get('availability')),
-			exclusions	=> htmlentities($result->get('exclusions')),
-			description	=> htmlentities($result->get('description')),
+			availability	=> $result->get('availability'),
+			exclusions	=> $result->get('exclusions'),
+			description	=> $result->get('description'),
 			photo		=> $result->get('photo'),
 			published	=> $result->get('published'),
 			deleted		=> $result->get('deleted')
