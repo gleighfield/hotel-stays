@@ -8,6 +8,7 @@ $offers = array(
     OfferTwo    => "The Sun's Meal Deals from £9.50 - 1st June - 31st July 2013",
     OfferThree  => "The Sun's Camping from £1 - 22nd June - xxxx xxxx 2013",
     OfferFour   => "The Sun's 2 for 1 or Free Sports Sessions/Lessons - 22nd June - xxxx xxxx 2013",
+    OfferFive   => "The Sun's Days Out - 20th July - xxxx xxxx 2013",
 );
 
 $html .='
