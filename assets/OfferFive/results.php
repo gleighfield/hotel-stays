@@ -168,9 +168,12 @@
 				array_push($dayOffers, $html);
 			}
 		}
-	
-		$i['rows'] = $dayOffers;
-		array_push($results, $i);
+
+        //Empty? if so don't add
+        if (!empty($dayOffers)) {
+            $i['rows'] = $dayOffers;
+            array_push($results, $i);
+        }
 	}
 
 	header('Content-type: application/json');
