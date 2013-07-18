@@ -70,15 +70,15 @@
 
 
     $offers = array(
-        '32'    => 'Summer Days Out 2-for-1',
-        '33'    => 'Summer Days Out 50% off',
+        '32'    => '2-FOR-1 SUMMER DAYS OUT',
+        '33'    => '50% OFF SUMMER DAYS OUT',
     );
 
     $then = strtotime('07/26/2013 4:00PM'); //Minus 8 hours as server not on GMT Time
 
     if (time() > $then) {
-        $offers[34] = 'Rainy Days In 2-for-1';
-        $offers[35] = 'Rainy Days In 50% off';
+        $offers[34] = '2-FOR-1 RAINY DAYS OUT';
+        $offers[35] = '50% OFF RAINY DAYS OUT';
     }
 
 $results = array();
