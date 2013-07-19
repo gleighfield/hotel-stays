@@ -32,7 +32,7 @@ $html .='
 			<label for="geo">Obtain Co-ords (Slower)?</label>
 			<input type="checkbox" name="geo" id="geo" value="1"><br>
 
-			<label for="geo">Obtain co-ords by postcode instead of full address? Use this if the initial import did not get co-ords?</label>
+			<label for="geopc">Obtain co-ords by postcode instead of full address? Use this if the initial import did not get co-ords?</label>
 			<input type="checkbox" name="geopc" id="geopc" value="1"><br>
 
 			<label for="newImport">New import?</label>
@@ -111,11 +111,11 @@ if (isset($_POST['submit'])) {
                     if (!empty($listing['addressLineThree'])) {
                         $address .= ', ' . $listing['addressLineThree'];
                     }
-                    $address .= ', '. $listing['postCode'];
+                    $address .= ', '. str_replace(' ', '', $listing['postCode']);
 
                     //Lets obtain geo just on postocode. Less accurate, but should return a result.
                     if ($import['geopc'] == "1") {
-                        $address = $listing['postCode'];
+                        $address = str_replace(' ', '', $listing['postCode']);
                     }
 
                     $address=urlencode($address);
