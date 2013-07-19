@@ -32,9 +32,6 @@ $html .='
 			<label for="geo">Obtain Co-ords (Slower)?</label>
 			<input type="checkbox" name="geo" id="geo" value="1"><br>
 
-			<label for="geopc">Obtain co-ords by postcode instead of full address? Use this if the initial import did not get co-ords?</label>
-			<input type="checkbox" name="geopc" id="geopc" value="1"><br>
-
 			<label for="newImport">New import?</label>
 			<input type="checkbox" name="newimport" id="newImport" value="1">
 			<input type="hidden" name="submit" />
@@ -51,7 +48,6 @@ if (isset($_POST['submit'])) {
         count		=> 0,
         status		=> $_POST['newimport'],
         geo         => $_POST['geo'],
-        geopc       => $_POST['geopc'],
         fileName 	=> $_FILES['file']['name'],
         fileType 	=> $_FILES['file']['type'],
         fileSize 	=> $_FILES['file']['size'],
@@ -70,64 +66,67 @@ if (isset($_POST['submit'])) {
         //Skip header line
         if ($import[count] != 0) {
             $listing = array (
-                name			=> $line[1],
-                addressLineOne	=> $line[2],
-                addressLineTwo	=> $line[3],
+                name			    => $line[1],
+                addressLineOne	    => $line[2],
+                addressLineTwo	    => $line[3],
                 addressLineThree	=> $line[4],
-                countyId		=> $line[5],
-                postCode		=> $line[6],
-                countryId		=> $line[7],
-                url			    => $line[8],
-                telephoneNumber	=> $line[9],
-                monday			=> $line[10],
-                tuesday		    => $line[11],
-                wednesday		=> $line[12],
-                thursday		=> $line[13],
-                friday			=> $line[14],
-                saturday		=> $line[15],
-                sunday			=> $line[16],
-                availability	=> htmlentities($line[17]),
-                exclusions		=> htmlentities($line[18]),
-                description		=> $line[19],
-                photo			=> $line[20],
-                published		=> $line[21],
-                deleted		=> 0,			//Forcefully setting as zero regardless of user input.
-                lng			=> $line[23],
-                lat			=> $line[24],
+                countyId		    => $line[5],
+                postCode		    => $line[6],
+                countryId		    => $line[7],
+                url			        => $line[8],
+                telephoneNumber	    => $line[9],
+                monday			    => $line[10],
+                tuesday		        => $line[11],
+                wednesday		    => $line[12],
+                thursday		    => $line[13],
+                friday			    => $line[14],
+                saturday		    => $line[15],
+                sunday			    => $line[16],
+                availability	    => htmlentities($line[17]),
+                exclusions		    => htmlentities($line[18]),
+                description		    => $line[19],
+                photo			    => $line[20],
+                published		    => 1,                           //Forcefully set to published
+                deleted		        => 0,			                //Forcefully setting as zero regardless of user input.
+                lng			        => $line[23],
+                lat			        => $line[24],
             );
 
+            //Are we importing
             if ($import['geo'] == "1") {
-                if (!empty($line[23]) && !empty($line24)) {
-                    $listing['lng']	= $line[22];
-                    $listing['lat']	= $line[23];
+                if (!empty($line[23]) || !empty($line[24]) || $line[23] != "" || $line[24] != "") {
+                    $listing['lng']	= $line[23];
+                    $listing['lat']	= $line[24];
                 }
                 else {
                     //OK We need to get this address's co-ordinates, we know to use a postcode and a valid address line one, because we've said a valid postcode and address line one MUST be included.
-
-                    $address = $listing['addressLineOne'];
-                    if (!empty($listing['addressLineTwo'])) {
-                        $address .= ', ' . $listing['addressLineTwo'];
-                    }
-                    if (!empty($listing['addressLineThree'])) {
-                        $address .= ', ' . $listing['addressLineThree'];
-                    }
-                    $address .= ', '. str_replace(' ', '', $listing['postCode']);
-
-                    //Lets obtain geo just on postocode. Less accurate, but should return a result.
-                    if ($import['geopc'] == "1") {
-                        $address = str_replace(' ', '', $listing['postCode']);
-                    }
-
-                    $address=urlencode($address);
-
+                    $address = urlencode(str_replace(' ', '', $listing['postCode']));
                     $link = "http://maps.googleapis.com/maps/api/geocode/json?address=$address&sensor=false";
 
                     $gps = file_get_contents($link);
                     $gps = $modx->fromJSON($gps);
-                    $gps = $gps['results'][0];
 
-                    $listing['lng'] = $gps['geometry']['location']['lng'];
-                    $listing['lat'] = $gps['geometry']['location']['lat'];
+                    if ($gps['status'] != 'OK') {
+                        //Lets retry
+                        sleep(1);
+                        $gps = file_get_contents($link);
+                        $gps = $modx->fromJSON($gps);
+
+                        if ($gps['status'] != 'OK') {
+                            //Genuine error here lets log it
+                            $modx->log(modX::LOG_LEVEL_ERROR, 'ERROR IMPORTING GEO CODES');
+                        }
+                        else {
+                            $gps = $gps['results'][0];
+                            $listing['lng'] = $gps['geometry']['location']['lng'];
+                            $listing['lat'] = $gps['geometry']['location']['lat'];
+                        }
+                    }
+                    else {
+                        $gps = $gps['results'][0];
+                        $listing['lng'] = $gps['geometry']['location']['lng'];
+                        $listing['lat'] = $gps['geometry']['location']['lat'];
+                    }
                 }
             }
 
