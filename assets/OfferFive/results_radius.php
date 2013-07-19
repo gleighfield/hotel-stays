@@ -77,8 +77,8 @@
     $then = strtotime('07/26/2013 4:00PM'); //Minus 8 hours as server not on GMT Time
 
     if (time() > $then) {
-        $offers[34] = '2-FOR-1 RAINY DAYS OUT';
-        $offers[35] = '50% OFF RAINY DAYS OUT';
+        $offers[34] = '2-FOR-1 DAYS IN THE SHADE';
+        $offers[35] = '50% OFF DAYS IN THE SHADE';
     }
 
 $results = array();

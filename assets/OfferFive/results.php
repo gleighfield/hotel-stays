@@ -13,6 +13,12 @@
 		offset		=> $_GET['offset'],
 	);
 
+    //Are we searching by the in or out field?
+    if ($search['by'] == 'photo_0' || $search['by'] == 'photo_1') {
+        $type = substr($search['term'], -1);
+        $search['by'] = 'photo';
+    }
+
 	//Init MODX
 	require_once '../../core/config/config.inc.php';
 	require_once MODX_CORE_PATH.'model/modx/modx.class.php';
@@ -61,17 +67,37 @@
 
 	$listings = $modx->getCollection($search['className'], $q);
 
-	$offers = array(
-        '32'    => '2-FOR-1 SUMMER DAYS OUT',
-        '33'    => '50% OFF SUMMER DAYS OUT',
-	);
+    //Are we searching for a in or out activity?
+    if (!$search['type']) {
+        $offers = array(
+            '32'    => '2-FOR-1 SUMMER DAYS OUT',
+            '33'    => '50% OFF SUMMER DAYS OUT',
+        );
 
-    $then = strtotime('07/26/2013 4:00PM'); //Minus 8 hours as server not on GMT Time
+        $then = strtotime('07/26/2013 4:00PM'); //Minus 8 hours as server not on GMT Time
 
-    if (time() > $then) {
-        $offers[34] = '2-FOR-1 RAINY DAYS OUT';
-        $offers[35] = '50% OFF RAINY DAYS OUT';
+        if (time() > $then) {
+            $offers[34] = '2-FOR-1 DAYS IN THE SHADE';
+            $offers[35] = '50% OFF DAYS IN THE SHADE';
+        }
     }
+    else {
+        if ($search['type'] == '0') {                       //Days Out
+            $offers = array(
+                '32'    => '2-FOR-1 SUMMER DAYS OUT',
+                '33'    => '50% OFF SUMMER DAYS OUT',
+            );
+        }
+        else {                                              //Days In
+            $offers = array(
+                '34'    => '2-FOR-1 DAYS IN THE SHADE',
+                '35'    => '50% OFF DAYS IN THE SHADE',
+            );
+        }
+    }
+
+
+
 
 	$results = array();
 
